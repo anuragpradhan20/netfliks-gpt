@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         netflixRed: '#E50914', 
       },
-    },
+      },
   },
   plugins: [],
 }
