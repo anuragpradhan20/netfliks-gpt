@@ -21,7 +21,6 @@ signOut(auth).then(() =>{
 });
 }
 useEffect(()=>{
-  console.log("hello");
  const unscribe=onAuthStateChanged(auth, (user) => {
     if (user) {
       const {uid,email,displayName} = user;
@@ -35,8 +34,8 @@ useEffect(()=>{
   return ()=>unscribe;
   },[])
   return (
-    <div className='w-[80vw] absolute top-2 left-36 flex justify-between items-center p-2  text-netflixRed'>
-      <img src={logoImage} alt="logo" className='w-44'></img>
+    <div className='w-[80vw] absolute top-3 left-36 flex justify-between items-center p-2  text-netflixRed z-50'>
+      <img src={logoImage} alt="logo" className='w-44 text-netflixRed'></img>
       <div>
         {
           user && 

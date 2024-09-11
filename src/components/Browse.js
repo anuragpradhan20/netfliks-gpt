@@ -1,13 +1,15 @@
-import React from 'react'
+import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 import Header from './Header';
-
+import MainContainer from './MainContainer';
+import SecondaryContainer from './SecondaryContainer';
 const Browse = () => {
-
+   useNowPlayingMovies();
   return (
-    <div className="w-full h-[100vw] bg-gray-950">
+    <div className='w-screen'>
       <Header/>
+      <MainContainer/>
+      <SecondaryContainer/>
     </div>
   )
 }
-
-export default Browse
+export default Browse;
