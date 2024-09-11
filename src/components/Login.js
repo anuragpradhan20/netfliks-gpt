@@ -1,5 +1,5 @@
 import Header from "./Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useRef, useState } from "react";
 import { checkNameValidation, checkValidation } from "../utils/validate";
 import {createUserWithEmailAndPassword } from "firebase/auth";
@@ -8,11 +8,11 @@ import {signInWithEmailAndPassword} from "firebase/auth";
 import {updateProfile} from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_IMAGE } from "../utils/constant";
 const  Login=()=>{
     const[isSigninForm,setSignInForm]=useState(true);
     const[errorMessage,setErrorMessage]=useState(null);
     const dispatch=useDispatch();
-    const navigate=useNavigate();
     const email=useRef(null);
     const password=useRef(null);
     const name=useRef(null);
@@ -40,11 +40,9 @@ const  Login=()=>{
               }).then(() => {
                 const {uid,email,displayName} = auth.currentUser;
                 dispatch(addUser({uid:uid,email:email,displayName:displayName}));
-                navigate("/browse");
+               
                }).catch((error) => {
              });
-           
-            console.log(user);
          })
        .catch((error) => {
             const errorCode = error.code;
@@ -57,8 +55,6 @@ const  Login=()=>{
     signInWithEmailAndPassword(auth, emailInput, passwordInput)
     .then((userCredential) => {
     const user = userCredential.user;
-    navigate("/browse");
-     console.log(user);
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -80,7 +76,7 @@ const  Login=()=>{
     return(
         <div className="relative">
         <div className="overflow-hidden w-full">
-            <img src="https://assets.nflxext.com/ffe/siteui/vlv3/dae1f45f-c2c5-4a62-8d58-6e1b0c6b2d8e/6d1fb8a4-5844-42a4-9b01-1c6c128acf19/IN-en-20240827-TRIFECTA-perspective_WEB_c292a608-cdc6-4686-8dc8-405bfcf753af_medium.jpg" alt="background-image" className="w-full object-cover scale-110 brightness-50"></img>
+            <img src={BACKGROUND_IMAGE} className="w-full object-cover scale-110 brightness-50"></img>
         </div>
         <Header/>
         <form onSubmit={(e)=>e.preventDefault()} className="w-[400px] absolute left-1/2 top-[12%] transform -translate-x-1/2 bg-black bg-opacity-60 p-6 rounded-md">

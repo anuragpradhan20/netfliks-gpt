@@ -5,17 +5,35 @@ import {signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
+import { removeUser } from '../utils/userSlice';
 const Header = () => {
-  const navigate=useNavigate();
+const navigate=useNavigate();
+const dispatch=useDispatch();
 const user=useSelector((store)=>store.user);
 const handelSignout=()=>{
 signOut(auth).then(() =>{
-  navigate("/")
-  
 }).catch((error) => {
   navigate("/error");
 });
 }
+useEffect(()=>{
+  console.log("hello");
+ const unscribe=onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const {uid,email,displayName} = user;
+      dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+      navigate("/browse")
+    } else {
+      dispatch(removeUser());
+      navigate("/");
+    }
+  });
+  return ()=>unscribe;
+  },[])
   return (
     <div className='w-[80vw] absolute top-2 left-36 flex justify-between items-center p-2  text-netflixRed'>
       <img src={logoImage} alt="logo" className='w-44'></img>
